@@ -64,6 +64,8 @@ directive
     | stringList
     | numberRanges
     | properties
+    | byteSizeArg
+    | timeDurationArg
   )*?
   ;
 
@@ -121,10 +123,11 @@ properties
  | 'prop' ':' OBrace (propertyList)+ CBrace CBrace { notifyErrorListeners("Too many start paranthesis"); }
  | 'prop' ':' (propertyList)+ CBrace { notifyErrorListeners("Missing opening brace"); }
  | 'prop' ':' OBrace (propertyList)+  { notifyErrorListeners("Missing closing brace"); }
+ | 'aggregate' ':' OBrace (propertyList)+  CBrace { notifyErrorListeners("Aggregate directive requires properties."); }
  ;
 
 propertyList
- : property (',' property)*
+ : property (',' property)* 
  ;
 
 property
@@ -132,7 +135,7 @@ property
  ;
 
 numberRanges
- : numberRange ( ',' numberRange)*
+ : numberRange ( ',' numberRange)* 
  ;
 
 numberRange
@@ -141,6 +144,14 @@ numberRange
 
 value
  : String | Number | Column | Bool
+ ;
+
+byteSizeArg
+ : 'byteSize' ':' Number
+ ;
+
+timeDurationArg
+ : 'timeDuration' ':' Number
  ;
 
 ecommand
@@ -192,9 +203,8 @@ stringList
  ;
 
 identifierList
- : Identifier (',' Identifier)*
+ : Identifier (',' Identifier)* 
  ;
-
 
 /*
  * Following are the Lexer Rules used for tokenizing the recipe.
@@ -206,8 +216,8 @@ Or       : '||';
 And      : '&&';
 Equals   : '==';
 NEquals  : '!=';
-GTEquals : '>=';
-LTEquals : '<=';
+GTEquals : '>='; 
+LTEquals : '<='; 
 Match    : '=~';
 NotMatch : '!~';
 QuestionColon : '?:';
@@ -247,7 +257,6 @@ BackSlash: '\\';
 Dollar   : '$';
 Tilde    : '~';
 
-
 Bool
  : 'true'
  | 'false'
@@ -258,20 +267,20 @@ Number
  ;
 
 Identifier
- : [a-zA-Z_\-] [a-zA-Z_0-9\-]*
+ : [a-zA-Z_\-] [a-zA-Z_0-9\-]* 
  ;
 
 Macro
- : [a-zA-Z_] [a-zA-Z_0-9]*
+ : [a-zA-Z_] [a-zA-Z_0-9]* 
  ;
 
 Column
- : ':' [a-zA-Z_\-] [:a-zA-Z_0-9\-]*
+ : ':' [a-zA-Z_\-] [:a-zA-Z_0-9\-]* 
  ;
 
 String
- : '\'' ( EscapeSequence | ~('\'') )* '\''
- | '"'  ( EscapeSequence | ~('"') )* '"'
+ : '\'' ( EscapeSequence | ~('\'') )* '\'' 
+ | '"'  ( EscapeSequence | ~('"') )* '"' 
  ;
 
 EscapeSequence

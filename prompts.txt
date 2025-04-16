@@ -1,0 +1,5 @@
+1. Analyze the existing grammar in Directives.g4.
+2. Identify new tokens or directives to be added.
+3. Modify the grammar rules in Directives.g4 to include new functionality.
+4. Create or modify unit tests in the wrangler-core module to test the new functionality.
+5. Document all changes made in this prompts.txt file.

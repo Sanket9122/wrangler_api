@@ -49,6 +49,18 @@ public enum TokenType implements Serializable {
    * name within the recipe.
    */
   DIRECTIVE_NAME,
+  
+  /**
+   * Represents the enumerated type for the object of type {@code ByteSize}.
+   * This type is associated with the token that represents a byte size value.
+   */
+  BYTE_SIZE,
+
+  /**
+   * Represents the enumerated type for the object of type {@code TimeDuration}.
+   * This type is associated with the token that represents a time duration value.
+   */
+  TIME_DURATION,
 
   /**
    * Represents the enumerated type for the object of {@code ColumnName} type.
